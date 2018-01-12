@@ -1,0 +1,9 @@
+{
+    "server":"example.com",
+    "server_port":8389,
+    "local_port":1080,
+    "password":"xxxx",
+    "timeout":1,
+	"http_proxy":"0.0.0.0:8088",
+    "method":"aes-256-cfb"
+}

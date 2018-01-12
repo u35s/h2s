@@ -1,7 +1,7 @@
 language: go
 go:
-- tip
+- 1.6
 install:
-- go get -d -v ./... && go build -v ./...
+- go build -v ./...
 script:
 - go vet -x ./...

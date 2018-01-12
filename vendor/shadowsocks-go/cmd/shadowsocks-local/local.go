@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"time"
 
-	ss "shadowsocks-go/shadowsocks"
+	ss "github.com/shadowsocks/shadowsocks-go/shadowsocks"
 )
 
 var debug ss.DebugLog
@@ -360,7 +360,6 @@ func main() {
 	flag.StringVar(&configFile, "c", "config.json", "specify config file")
 	flag.StringVar(&cmdServer, "s", "", "server address")
 	flag.StringVar(&cmdLocal, "b", "", "local address, listen only to this address if specified")
-	flag.StringVar(&cmdConfig.HttpProxy, "P", "", "local http proxy address")
 	flag.StringVar(&cmdConfig.Password, "k", "", "password")
 	flag.IntVar(&cmdConfig.ServerPort, "p", 0, "server port")
 	flag.IntVar(&cmdConfig.Timeout, "t", 300, "timeout in seconds")
@@ -417,8 +416,6 @@ func main() {
 	}
 
 	parseServerConfig(config)
-	if config.HttpProxy != "" {
-		go httpProxy(config.HttpProxy)
-	}
+
 	run(cmdLocal + ":" + strconv.Itoa(config.LocalPort))
 }

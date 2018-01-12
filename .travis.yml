@@ -2,6 +2,6 @@ language: go
 go:
 - 1.9
 install:
-- go build -v .
+- go get -d -v ./... && go build -v .
 script:
 - go vet -x .

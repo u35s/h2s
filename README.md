@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/u35s/h2s.svg?branch=master)](https://travis-ci.org/u35s/h2s)
+
+
 # h2s
 h2s是一个把socks5代理转换为http,https代理的小工具,同时支持socks5,http,https
 

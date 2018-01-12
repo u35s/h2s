@@ -56,7 +56,7 @@ func getHostPortType(line []byte) (host, port, tp string, err error) {
 	}
 	slc := strings.Split(string(line), " ")
 	if len(slc) < 2 {
-		fmt.Errorf("first line err %v", string(line))
+		err = fmt.Errorf("first line err %v", string(line))
 		return
 	}
 	switch slc[0] {

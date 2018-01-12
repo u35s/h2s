@@ -29,3 +29,31 @@ h2s -s "socks5.com:8388" -P "0.0.0.0:8088" -b "0.0.0.0" -l 1080
 * -l 本地socks5代理地址端口 eg: 1080
 * -m 加密方法 default: aes-256-cfb
 * -d 开启调试日志
+
+# 测试
+终端下执行
+
+```bash
+root@hostname https_proxy=127.0.0.1:8088 http_proxy=127.0.0.1:8088 curl -v ip.cn
+* Rebuilt URL to: ip.cn/
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 8088 (#0)
+> GET http://ip.cn/ HTTP/1.1
+> Host: ip.cn
+> User-Agent: curl/7.54.0
+> Accept: */*
+> Proxy-Connection: Keep-Alive
+>
+< HTTP/1.1 200 OK
+< Server: nginx/1.8.0
+< Date: Fri, 12 Jan 2018 12:58:41 GMT
+< Content-Type: text/html; charset=UTF-8
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< Vary: Accept-Encoding
+< X-Powered-By: PHP/5.6.32-1~dotdeb+7.1
+<
+当前 IP：47.89.180.x 来自：美国 阿里云
+* Connection #0 to host 127.0.0.1 left intact
+``` 

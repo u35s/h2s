@@ -97,23 +97,29 @@ func handleHttpProxyConn(conn net.Conn) {
 		return
 	}
 
-	addr := bytes.Buffer{}
-	addr.WriteByte(0x03)
-	addr.WriteByte(byte(uint8(len(hosts))))
-	addr.WriteString(hosts)
-	port, err := strconv.ParseInt(ports, 10, 0)
-	if err != nil {
-		debug.Printf("https host port conv err,%v\n", ports)
-		return
-	}
-	//大端序
-	port16 := uint16(port)
-	addr.WriteByte(byte(uint8(port16 >> 8)))
-	addr.WriteByte(byte(uint8(port16 & 0x00ff)))
-	debug.Printf("connecting to %v:%v over %v\n", hosts, ports, tps)
-	debug.Printf("\n%v\n%v", first.String(), later.String())
+	var remote net.Conn
 
-	remote, err := createServerConn(addr.Bytes(), hosts+":"+ports)
+	if _, ok := gfwList[hosts]; !fgfw && !ok {
+		remote, err = net.Dial("tcp", hosts+":"+ports)
+		debug.Printf("direct to %v:%v\n", hosts, ports)
+	} else {
+		addr := bytes.Buffer{}
+		addr.WriteByte(0x03)
+		addr.WriteByte(byte(uint8(len(hosts))))
+		addr.WriteString(hosts)
+		port, err := strconv.ParseInt(ports, 10, 0)
+		if err != nil {
+			debug.Printf("https host port conv err,%v\n", ports)
+			return
+		}
+		//大端序
+		port16 := uint16(port)
+		addr.WriteByte(byte(uint8(port16 >> 8)))
+		addr.WriteByte(byte(uint8(port16 & 0x00ff)))
+		debug.Printf("connecting to %v:%v over %v\n", hosts, ports, tps)
+		debug.Printf("\n%v\n%v", first.String(), later.String())
+		remote, err = createServerConn(addr.Bytes(), hosts+":"+ports)
+	}
 	if err != nil {
 		debug.Printf("%v\n", err)
 		if len(servers.srvCipher) > 1 {

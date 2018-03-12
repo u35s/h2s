@@ -231,6 +231,12 @@ func parseServerConfig(config *ss.Config) {
 	for _, se := range servers.srvCipher {
 		log.Println("available remote server", se.server)
 	}
+	if config.Gfw != "" {
+		readGfwlist(config.Gfw)
+	}
+	if config.Fgfw != "" {
+		fgfw = true
+	}
 	return
 }
 
@@ -366,6 +372,8 @@ func main() {
 	flag.IntVar(&cmdConfig.Timeout, "t", 300, "timeout in seconds")
 	flag.IntVar(&cmdConfig.LocalPort, "l", 0, "local socks5 proxy port")
 	flag.StringVar(&cmdConfig.Method, "m", "", "encryption method, default: aes-256-cfb")
+	flag.StringVar(&cmdConfig.Gfw, "gfw", "", "gfwlist config file")
+	flag.BoolVar((*bool)(&fgfw), "fgfw", false, "all traffic takes the agent")
 	flag.BoolVar((*bool)(&debug), "d", false, "print debug message")
 
 	flag.Parse()

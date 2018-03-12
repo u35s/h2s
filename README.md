@@ -2,7 +2,7 @@
 
 
 # h2s
-h2s是一个把socks5代理转换为http,https代理的小工具,同时支持socks5,http,https
+h2s是一个把socks5代理转换为http,https代理的小工具,同时支持socks5,http,https,支持GFW配置智能翻墙
 
 # 安装
 ```golang
@@ -29,6 +29,8 @@ h2s -s "socks5.com:8388" -P "0.0.0.0:8088" -b "0.0.0.0" -l 1080
 * -l 本地socks5代理地址端口 eg: 1080
 * -m 加密方法 default: aes-256-cfb
 * -d 开启调试日志
+* -gfw 指定gfw配置文件,最新的gfw可以从[github](https://github.com/cokebar/gfwlist2dnsmasq)生成,gfw文件中指定的域名将会走代理,其余的默认不走代理
+* -fgfw 是否所有流量都走代理
 
 # 测试
 终端下执行

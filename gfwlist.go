@@ -46,3 +46,20 @@ func readDomain(bts string) string {
 	}
 	return ""
 }
+
+func getTopDomain(bts string) string {
+	var num int
+	length := len(bts)
+	if length > 0 {
+		for i := length - 1; i > 0; i-- {
+			if bts[i] == '.' {
+				if num > 0 {
+					return string(bts[i+1:])
+				} else {
+					num++
+				}
+			}
+		}
+	}
+	return bts
+}

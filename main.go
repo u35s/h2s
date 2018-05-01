@@ -352,7 +352,7 @@ func run(listenAddr string) {
 
 func enoughOptions(config *ss.Config) bool {
 	return config.Server != nil && config.ServerPort != 0 &&
-		config.LocalPort != 0 && config.Password != ""
+		config.Password != ""
 }
 
 func main() {
@@ -419,14 +419,16 @@ func main() {
 			fmt.Fprintln(os.Stderr, "given server_password, ignore server, server_port and password option:", config)
 		}
 		if config.LocalPort == 0 {
-			fmt.Fprintln(os.Stderr, "must specify local port")
-			os.Exit(1)
+			//fmt.Fprintln(os.Stderr, "must specify local port")
+			//os.Exit(1)
 		}
 	}
 
 	parseServerConfig(config)
-	if config.HttpProxy != "" {
-		go httpProxy(config.HttpProxy)
+	if config.LocalPort != 0 {
+		go run(cmdLocal + ":" + strconv.Itoa(config.LocalPort))
 	}
-	run(cmdLocal + ":" + strconv.Itoa(config.LocalPort))
+	if config.HttpProxy != "" {
+		httpProxy(config.HttpProxy)
+	}
 }

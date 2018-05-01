@@ -98,10 +98,10 @@ func handleHttpProxyConn(conn net.Conn) {
 	}
 
 	var remote net.Conn
-
-	if _, ok := gfwList[hosts]; !fgfw && !ok {
+	topDomain := getTopDomain(hosts)
+	if _, ok := gfwList[topDomain]; !fgfw && !ok {
 		remote, err = net.Dial("tcp", hosts+":"+ports)
-		debug.Printf("direct to %v:%v\n", hosts, ports)
+		debug.Printf("direct to %v:%v,topDomain:%v\n", hosts, ports, topDomain)
 	} else {
 		addr := bytes.Buffer{}
 		addr.WriteByte(0x03)

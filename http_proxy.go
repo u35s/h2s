@@ -107,7 +107,8 @@ func handleHttpProxyConn(conn net.Conn) {
 		addr.WriteByte(0x03)
 		addr.WriteByte(byte(uint8(len(hosts))))
 		addr.WriteString(hosts)
-		port, err := strconv.ParseInt(ports, 10, 0)
+		var port int64
+		port, err = strconv.ParseInt(ports, 10, 0)
 		if err != nil {
 			debug.Printf("https host port conv err,%v\n", ports)
 			return
